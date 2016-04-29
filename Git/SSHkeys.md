@@ -30,17 +30,21 @@ ssh公钥私钥同时生成且唯一配对。公钥用于远程主机，私钥�
   
 解决方案：
 
-1. `ssh-keygen -t rsa -C "youremail@email.com" -f ~/.ssh/second   `生成新的ssh key并命名为second 或者ssh-keygen -t rsa -C "youremail@email.com"   
-在询问时定义名称 
+### 1. 生成SSH Key
+
+`ssh-keygen -t rsa -C "youremail@email.com" -f ~/.ssh/second   `生成新的ssh key并命名为second 或者ssh-keygen -t rsa -C "youremail@email.com"   
+在询问时定义名称,如下： 
 
 ```
 $ ssh-keygen -t rsa -C qf.huo@outlook.com
 Generating public/private rsa key pair.
 Enter file in which to save the key (/c/Users/userName/.ssh/id_rsa):
 ```
-这时输入`second` 
+这时输入`second` ,就会保存为second. 
 
-2. 此时`ls`出`.ssh`目录，会发现多了second公钥和私钥 
+###2. 查看密钥对,并添加
+
+此时`ls`出`.ssh`目录，会发现多了second公钥和私钥 
 
 ```
 id_rsa   
@@ -50,10 +54,25 @@ list.txt 
 second   
 second.pub   
 ```  
-3. 远程主机添加公钥 
+
+默认SSH只会读取`id_rsa`，所以为了让SSH识别新的私钥，需要将其添加到SSH agent。
+
+```
+ssh-add ~/.ssh/second
+
+```
+>该命令如果报错：__Could not open a connection to your authentication agent.无法连接到ssh agent__，可执行`ssh-agent bash`命令后,再执行ssh-add命令。
+
+###3. 远程主机添加公钥 
+
+用文本编辑工具打开`second.pub `文件，将里面的内容，粘贴到服务器端指定的录入接口就行。
+
+如:
+github.com [https://github.com/settings/ssh](https://github.com/settings/ssh) 
 
 
-4. 在`~/.ssh/`目录下新建`config`文件，用于配置各个公私钥对应的主机 
+
+###4. 在`~/.ssh/`目录下新建`config`文件，用于配置各个公私钥对应的主机 
 
 ```
 $ touch config
@@ -83,7 +102,7 @@ PreferredAuthentications publickey //
      4. 如有需要还可以添加 Port:xxxx 端口配置。   
 
 
-5. 测试连接情况
+###5. 测试连接情况
 
 
 ```
@@ -94,7 +113,7 @@ $ ssh -T git@second.github.com
 >[更多参考](https://stackoverflow.com/questions/3844393/what-to-do-about-pty-allocation-request-failed-on-channel-0)
 
 
-6. 现在开始使用新的公私钥进行工作吧 
+###6. 现在开始使用新的公私钥进行工作吧 
 
     - 情景1：使用新的公私钥进行克隆操作 
 
@@ -103,5 +122,9 @@ $ ssh -T git@second.github.com
         注意此时要把原来的github.com配置成你定义的second.github.com  
   
     - 情景2：已经克隆，之后才添加新的公私钥，我要为仓库设置使用新的公私钥进行push操作 修改仓库的配置文件：
-        `.git/config` 为 [remote "origin"] url = git@second.github.com:itmyline/blog.git
+        `.git/config` 为：
+         ```
+         [remote "origin"]
+          url = git@second.github.com:itmyline/blog.git
+         ```
         即可 之后就照平常一样工作就行啦！
