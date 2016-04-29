@@ -128,3 +128,11 @@ $ ssh -T git@second.github.com
           url = git@second.github.com:itmyline/blog.git
          ```
         即可 之后就照平常一样工作就行啦！
+
+>注意：github根据配置文件的user.email来获取github帐号显示author信息，所以对于多帐号用户一定要记得将user.email改为相应的email(second@mail.com)。
+
+##Resource
+
+http://help.github.com/win-set-up-git/
+
+http://help.github.com/multiple-ssh-keys/
