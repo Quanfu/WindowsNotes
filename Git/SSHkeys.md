@@ -146,3 +146,5 @@ $ ssh -T git@second.github.com
 http://help.github.com/win-set-up-git/
 
 http://help.github.com/multiple-ssh-keys/
+
+https://help.github.com/articles/generating-an-ssh-key/
