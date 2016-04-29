@@ -177,3 +177,6 @@ http://help.github.com/win-set-up-git/
 http://help.github.com/multiple-ssh-keys/
 
 https://help.github.com/articles/generating-an-ssh-key/
+
+[ssh-keygen 中文手册](http://www.jinbuguo.com/openssh/ssh-keygen.html)
+[ssh 多账号问题](http://ife.baidu.com/note/detail?noteId=894)
