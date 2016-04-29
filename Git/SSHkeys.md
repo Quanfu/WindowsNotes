@@ -141,6 +141,35 @@ $ ssh -T git@second.github.com
 
 * * *
 
+### 7.设置git email address等
+
+- 方法一：在代码仓库下设置用户名和email
+
+```
+jbloggs@hostname:~/git$ git config user.name “Quanfu”
+jbloggs@hostname:~/git$ git config user.email “quanfu@test.com”
+```
+
+- 方法二：
+
+编辑仓库Repository文件夹下的 .git 文件夹中config文件
+```
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        fetch = +refs/heads/*:refs/remotes/origin/*
+        url = git@example.com:example.git
+[branch "master"]
+        remote = origin
+        merge = refs/heads/master
+[user]
+        name = Quanfu
+        email = quanfu@test.com
+```
+
 ##GitHub帮助文档
 
 http://help.github.com/win-set-up-git/
